@@ -10,22 +10,24 @@
     <script type="text/javascript" src="app.js"></script>
   </head>
   <body>
-    <h1 class="month-year"></h1>
-    <span class="previous">previous</span>
-    <table class="calendar">
-      <thead class="days-of-week">
-        <tr>
-          <th class="day">Sunday</th>
-          <th class="day">Monday</th>
-          <th class="day">Tuesday</th>
-          <th class="day">Wednesday</th>
-          <th class="day">Thursday</th>
-          <th class="day">Friday</th>
-          <th class="day">Saturday</th>
-        </tr>
-      </thead>
-      <tbody class="days-of-month"></tbody>
-    </table>
-    <span class="next">next</span>
+    <div class="container">
+      <h1 class="month-year"></h1>
+      <div class="calendar-wrapper">
+        <span class="previous">«</span>
+        <div class="calendar">
+          <div class="days-of-week">
+            <div class="weekend">S</div>
+            <div>M</div>
+            <div>T</div>
+            <div>W</div>
+            <div>T</div>
+            <div>F</div>
+            <div class="weekend">S</div>
+          </div>
+          <div class="days-of-month"></div>
+        </div>
+        <span class="next">»</span>
+      </div>
+    </div>
   </body>
 </html>

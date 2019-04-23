@@ -16,58 +16,52 @@ window.addEventListener('load', () => {
     'November',
     'December',
   ];
-  const monthYear = document.querySelector('.month-year');
+  const monthYearTitle = document.querySelector('.month-year');
+  const calendarGrid = document.querySelector('.days-of-month');
   const prevButton = document.querySelector('.previous');
   const nextButton = document.querySelector('.next');
 
   function getDaysInMonth(m, y) {
-    return new Date(y, m, 0).getDate();
+    return new Date(y, m + 1, 0).getDate();
   }
 
   function createCalendar(month, year) {
-    const firstDay = new Date(year, month).getDay();
-    const table = document.querySelector('.days-of-month');
-    table.innerHTML = '';
-    monthYear.innerHTML = `${months[month]} ${year}`;
+    const firstDayOfWeek = new Date(year, month).getDay();
+    const daysInCurrentMonth = getDaysInMonth(month, year);
+    const totalGridCount = daysInCurrentMonth + firstDayOfWeek;
+    calendarGrid.innerHTML = '';
+    monthYearTitle.innerHTML = `${months[month]} ${year}`;
 
-    let date = 1;
-    for (let i = 0; i < 6; i++) {
-      const row = document.createElement('tr');
-      for (let j = 0; j < 7; j++) {
-        if (i === 0 && j < firstDay) {
-          const box = document.createElement('td');
-          const boxNumber = document.createTextNode('');
-          if (j === 0 || j === 6) {
-            box.classList.add('weekend');
-          }
-          box.appendChild(boxNumber);
-          row.appendChild(box);
-        } else if (date > getDaysInMonth(month, year)) {
-          break;
-        } else {
-          const box = document.createElement('td');
-          const boxNumber = document.createTextNode(date);
-          if (j === 0 || j === 6) {
-            box.classList.add('weekend');
-          }
-          box.appendChild(boxNumber);
-          row.appendChild(box);
-          date += 1;
-        }
+    let dateOfMonth = 1;
+
+    for (let i = 0; i < totalGridCount; i++) {
+      const div = document.createElement('div');
+      const divBlank = document.createTextNode('');
+
+      if (i % 7 === 6 || i % 7 === 0) {
+        div.classList.add('weekend');
       }
-      table.appendChild(row);
+
+      if (i < firstDayOfWeek) {
+        div.appendChild(divBlank);
+      } else {
+        const divNumber = document.createTextNode(dateOfMonth);
+        div.appendChild(divNumber);
+        dateOfMonth += 1;
+      }
+      calendarGrid.appendChild(div);
     }
   }
 
   function next() {
-    currentMonth = (currentMonth + 1) % 12;
     currentYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
     createCalendar(currentMonth, currentYear);
   }
 
   function previous() {
-    currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
     currentYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+    currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
     createCalendar(currentMonth, currentYear);
   }
 
